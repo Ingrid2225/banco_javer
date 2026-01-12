@@ -6,7 +6,7 @@ class ClienteCreate(BaseModel):
     nome: str
     telefone: int
     correntista: bool
-    saldo_cc: Optional[float] = None  # SEM ge=0 aqui
+    saldo_cc: Optional[float] = None
 
 
 class ClienteUpdate(BaseModel):
@@ -15,7 +15,6 @@ class ClienteUpdate(BaseModel):
     correntista: Optional[bool] = Field(None, description="Cliente é correntista?")
     saldo_cc: Optional[float] = Field(None, description="Saldo da conta corrente")
 
-    # Exemplos para orientar o Swagger que o PATCH é parcial
     model_config = {
         "json_schema_extra": {
             "examples": [
@@ -23,7 +22,7 @@ class ClienteUpdate(BaseModel):
                 {"nome": "Leo"},
                 {"telefone": 11999999999},
                 {"correntista": False},
-                {"nome": "Leo", "saldo_cc": 120.0}  # exemplo com 2 campos
+                {"nome": "Leo", "saldo_cc": 120.0}
             ]
         }
     }
@@ -36,5 +35,5 @@ class ClienteOut(BaseModel):
     correntista: bool
     saldo_cc: float
     score_credito: float
-    # <- este campo precisa existir no response_model
+
 

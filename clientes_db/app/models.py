@@ -11,6 +11,6 @@ class Cliente(Base):
     correntista = Column(Boolean, nullable=False, default=False)
     saldo_cc = Column(Float, nullable=False, default=0.0)
 
-    # Regra de negócio no nível do banco: saldo não pode ser negativo
+
     __table_args__ = (CheckConstraint("saldo_cc >= 0.0", name="saldo_nao_negativo"),)
 

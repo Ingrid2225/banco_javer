@@ -1,9 +1,8 @@
-﻿
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 from .db import Base, engine
 from .routers import clientes
 
-# Cria as tabelas no SQLite ao iniciar
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -13,4 +12,5 @@ app = FastAPI(
 )
 
 app.include_router(clientes.router)
+
 

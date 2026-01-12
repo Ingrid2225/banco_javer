@@ -1,4 +1,4 @@
-﻿
+
 import httpx
 
 class DbClient:
@@ -34,4 +34,3 @@ class DbClient:
             r = await client.delete(f"{self.base_url}/clientes/{id_}", timeout=10)
             r.raise_for_status()
             return None
-

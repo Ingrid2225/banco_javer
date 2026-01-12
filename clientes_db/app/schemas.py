@@ -1,9 +1,8 @@
 ﻿
-# clientes_db/app/schemas.py
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict
 
 class ClienteCreate(BaseModel):
-    nome: str
+    nome: str = Field(..., min_length=2)
     telefone: int
     correntista: bool
     saldo_cc: float | None = None
@@ -21,5 +20,5 @@ class ClienteOut(BaseModel):
     correntista: bool
     saldo_cc: float
 
-    # 🔑 Necessário para serializar objetos ORM (SQLAlchemy) no Pydantic v2
+
     model_config = ConfigDict(from_attributes=True)
