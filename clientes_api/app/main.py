@@ -10,3 +10,4 @@ app = FastAPI(
 
 app.include_router(clientes.router)
 
+#comentario teste
