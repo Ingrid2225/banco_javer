@@ -17,19 +17,19 @@ def _session_mem():
     return sessionmaker(bind=engine, autocommit=False, autoflush=False)()
 
 def test_criar_conta_integrityerror_simulado_monkeypatch(monkeypatch):
-    """
-    Força IntegrityError no commit() do criar_conta para cobrir o except (91–95).
-    """
+    
+    # teste que fiz para cobrir linha 91 a 95.
+    
     db = _session_mem()
 
-    # payload válido (passa pelas validações e pré-checagens)
+    
     body = ContaCreate(
         agencia="1234", numero_conta="0001",
         nome="Ana", cpf="12345678901", telefone=11999999999, email="a@a.com",
         saldo_cc=0.0, correntista=True, cheque_especial_contratado=False, limite_cheque_especial=0.0
     )
 
-    # monkeypatch no commit da Session atual
+    
     def bad_commit():
         raise IntegrityError("stmt", {}, Exception("dup"))
     monkeypatch.setattr(db, "commit", bad_commit)
@@ -40,9 +40,7 @@ def test_criar_conta_integrityerror_simulado_monkeypatch(monkeypatch):
     assert exc.value.detail["code"] == "CONFLITO_UNICO"
 
 def test_cadastrar_cheque_especial_sucesso_cobre_retorno_final():
-    """
-    Garante execução do retorno final do endpoint (linha ~267) com sucesso.
-    """
+    #cobrir linha 267 também
     db = _session_mem()
     c = Conta(
         agencia="2222", numero_conta="9999", nome="Carla",
