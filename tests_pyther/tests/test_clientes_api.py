@@ -2,27 +2,22 @@
 import pytest
 import httpx
 
-# --------------------------
-# Ajuda para construir erros
-# --------------------------
+
 def _http_status_error(status: int, detail):
     req = httpx.Request("GET", "http://x")
     resp = httpx.Response(status, json={"detail": detail})
     return httpx.HTTPStatusError("err", request=req, response=resp)
 
 
-# --------------------------
-# Handlers de validação (422) e fluxos OK (já cobertos)
-# --------------------------
 @pytest.mark.asyncio
 async def test_handler_422_personalizado_api(api_async_client):
     client, _ = api_async_client
     invalido = {
-        "agencia": "12",               # curto
-        "numero_conta": "ABCD",       # não numérico
-        "cpf": "123",                 # curto
-        "telefone": 1,               # curto
-        "email": "x"                  # inválido
+        "agencia": "12",            
+        "numero_conta": "ABCD",       
+        "cpf": "123",               
+        "telefone": 1,               
+        "email": "x"                  
     }
     r = await client.post("/contas", json=invalido)
     assert r.status_code == 422
@@ -132,9 +127,7 @@ async def test_score_credito_api(api_async_client):
     assert r.json()["score_credito"] == 0.0
 
 
-# ----------------------------------------------------
-# Cobertura dos ramos de erro por endpoint (API)
-# ----------------------------------------------------
+
 @pytest.mark.asyncio
 async def test_api_requesterror_por_endpoint(api_async_client):
     client, fake = api_async_client
@@ -172,7 +165,7 @@ async def test_api_requesterror_por_endpoint(api_async_client):
     assert r.status_code == 503
 
     # 5) DELETE /contas/{ag}/{num}/desativar -> usar HTTPStatusError (o endpoint trata esse caso)
-    async def ok_obter(ag, num):  # permitir chegar à chamada de desativar
+    async def ok_obter(ag, num):  
         return {"saldo_cc": 0.0}
     fake.obter_conta = ok_obter
 
@@ -288,9 +281,6 @@ async def test_api_httpstatuserror_por_endpoint(api_async_client):
     assert r.json()["detail"]["code"] == "CHEQUE_ERR"
 
 
-# ----------------------------------
-# Extra: erro no score (HTTPStatus)
-# ----------------------------------
 @pytest.mark.asyncio
 async def test_score_credito_httpstatuserror(api_async_client):
     client, fake = api_async_client
