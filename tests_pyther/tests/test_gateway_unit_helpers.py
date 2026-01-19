@@ -18,7 +18,6 @@ def test_get_db_usa_variavel_de_ambiente(monkeypatch):
     monkeypatch.setenv("CLIENTES_DB_URL", "http://example:1234/")
     db = get_db()
     assert isinstance(db, DbConta)
-    # rstrip('/') é aplicado no DbConta, então garantimos que veio sem a barra do final:
     assert db.base_url == "http://example:1234"
 
 
