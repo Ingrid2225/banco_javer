@@ -166,16 +166,14 @@ clientes_db → http://localhost:8001/docs
 O gateway usa a variável:
 CLIENTES_DB_URL=http://localhost:8001
 
-Se não existir, o padrão é:
-
-http://localhost:8001
-
 
 
 ☑️ COMO RODAR OS TESTES
 
 Na raiz do projeto:
 coverage run -m pytest -c tests_pyther/pytest.ini -q
+
+
 
 ☑️ Endpoints Principais (clientes_api)
 
